@@ -1,0 +1,145 @@
+@startuml
+class org.example.account.Librarian {
++ void addBook(Book)
++ void addMember(Member)
++ void blacklistMember(Member)
++ void cancelMemberShip(Member)
++ void removeMemberFromBlacklist(Member)
+}
+
+class org.example.library.Library {
+- String libraryName
+- String libraryId
+- Map<BookStatus,List<BookBorrowDetails>> bookList
+- Librarian librarian
+- SearchSystem searchSystem
+- String libraryBranchId
++ Map<BookStatus,List<BookBorrowDetails>> getBookList()
++ void setBookList(Map<BookStatus,List<BookBorrowDetails>>)
++ Librarian getLibrarian()
++ void setLibrarian(Librarian)
++ SearchSystem getSearchSystem()
++ void setSearchSystem(SearchSystem)
++ String getLibraryBranch()
++ void setLibraryBranch(String)
+}
+
+
+class org.example.book.BookBorrowDetails {
+- LocalDate dateOfBorrow
+- LocalDate dateOfReturn
+- Member member
+- BookStatus bookStatus
++ LocalDate getDateOfBorrow()
++ void setDateOfBorrow(LocalDate)
++ LocalDate getDateOfReturn()
++ void setDateOfReturn(LocalDate)
++ Member getMember()
++ void setMember(Member)
++ BookStatus getBookStatus()
++ void setBookStatus(BookStatus)
++ Boolean issueBook(Member)
++ void returnBook()
+}
+
+
+enum org.example.Enums.Status {
++  NEVER
++  ON_TIME
++  LATE
++  ISSUED
+}
+
+class org.example.book.Book {
+- String ISBN
+- String title
+- Date publishingYear
+- List<String> authors
++ String getISBN()
++ void setISBN(String)
++ String getTitle()
++ void setTitle(String)
++ Date getPublishingYear()
++ void setPublishingYear(Date)
++ List<String> getAuthors()
++ void setAuthors(List<String>)
+}
+
+
+enum org.example.Enums.AccountType {
++  STUDENT
++  PROFESSOR
++  CASUAL_READER
++  TEACHER
+}
+
+class org.example.account.Account {
+- String firstName
+- String lastName
+- String id
+- String password
+- AccountType accountType
++ void resetPassword(String)
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getId()
++ void setId(String)
++ String getPassword()
++ void setPassword(String)
++ AccountType getAccountType()
++ void setAccountType(AccountType)
+}
+
+
+enum org.example.Enums.MemberStatus {
++  ACTIVE
++  CLOSED
++  CANCELED
++  BLACKLISTED
+}
+
+class org.example.search_system.SearchSystem {
++ void searchByAuthor(String)
++ void searchByTitle(String)
++ void searchByISBN(String)
+}
+
+class org.example.Main {
++ {static} void main(String[])
+}
+
+class org.example.account.Member {
+- Date dateOfMembership
+- MemberStatus memberStatus
+- Map<BookBorrowDetails,Status> checkedOutBookHistory
++ MemberStatus getMemberStatus()
++ void setMemberStatus(MemberStatus)
++ Date getDateOfMembership()
++ void setDateOfMembership(Date)
++ Map<BookBorrowDetails,Status> getCheckedOutBookHistory()
++ void setCheckedOutBookHistory(Map<BookBorrowDetails,Status>)
++ void addHistoryEntry(BookBorrowDetails,Status)
++ void lendBook(BookBorrowDetails)
++ void returnBook(BookBorrowDetails)
++ void renewBook(BookBorrowDetails)
++ void lostBook(BookBorrowDetails)
++ float checkForFine(BookBorrowDetails)
+}
+
+
+enum org.example.Enums.BookStatus {
++  AVAILABLE
++  RESERVED
++  LOANED
++  LOST
++  UNAVAILABLE
+}
+
+
+
+org.example.account.Account <|-- org.example.account.Librarian
+org.example.book.Book <|-- org.example.book.BookBorrowDetails
+org.example.account.Account <|-- org.example.account.Member
+@enduml

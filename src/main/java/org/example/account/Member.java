@@ -50,7 +50,7 @@ public class Member extends Account{
         this.checkedOutBookHistory.put(bookDetails,status);
     }
 
-    public void issueBook(BookBorrowDetails bookDetails){
+    public void lendBook(BookBorrowDetails bookDetails){
         boolean isBookIssued = bookDetails.issueBook(this);
         if(isBookIssued){
             this.checkedOutBookHistory.put(bookDetails,Status.ISSUED);
